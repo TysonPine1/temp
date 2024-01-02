@@ -10,7 +10,7 @@ class CreateAttendee(models.TransientModel):
     date = fields.Date(string='Date')
     
     def acton_wizport(self):
-        
+    
         data = {
             'model': 'create.wizard',
             'session_id': self.session_id.id,
@@ -19,4 +19,19 @@ class CreateAttendee(models.TransientModel):
             'form': self.read()[0]
         }
         print(data)
+
+        selected_session_id = data['form']['session_id'][0]
+        selected_partner_ids = data['form']['partner_id'][0]
+        sessions = self.env['openacademy.session'].search(['|',('id', '=' , selected_session_id), ('attendees', '=', selected_partner_ids)])
+
+        session_list = []
+        for s in sessions:
+            vals = {
+                'session_name':s.session_name,
+                'attendees':s.attendees.name,
+                'start_date':s.start_date,
+            }
+            session_list.append(vals)
+        data['sessions']=session_list
+                
         return self.env.ref('open_academy.action_report_wiz').with_context(landscape=True).report_action(self, data=data)

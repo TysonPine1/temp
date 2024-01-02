@@ -25,16 +25,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="data" t-as="o">
+                                <t t-foreach="sessions" t-as="o">
                                     <tr>
                                         <td style="text-align:left;">
                                             <t t-esc="o['session_name']"/>
                                         </td>
                                         <td style="text-align:left;">
-                                            <t t-esc="o['partner_id']"/>
+                                            <t t-esc="o['attendees']"/>
                                         </td>
                                         <td style="text-align:left;">
-                                            <t t-esc="o['date']"/>
+                                            <t t-esc="o['start_date']"/>
                                         </td>
                                     </tr>
                                 </t>
